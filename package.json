@@ -1,0 +1,24 @@
+{
+  "name": "Meraki Dashboard API - Vue Starter App",
+  "version": "1.0.0",
+  "description": "Meraki Dashboard API Express server with Vue and Vuetify",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Cisco",
+    "Meraki",
+    "Dashboard",
+    "API"
+  ],
+  "author": "Cory Guynn",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "global-request-logger": "^0.1.1",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0"
+  }
+}
