@@ -1,16 +1,41 @@
 <template>
 <div>
-    <h2>Traffic Analysis</h2>
-    <!-- pie-chart :chart-data="pieChartData"></pie-chart -->
-    <h3>{{net.name}}</h3>
-    <div v-if="!loaded">Loading Data...</div>
-    <v-card>
-      <div v-if="loaded"></div>
-      <v-card-title>Sent and Received</v-card-title>
-      <!-- pie-chart  :datacollection="pieChartData"/-->
-      <!--pie-chart :chart-data="sent" :chart-labels="applications" /-->
-      <pie-chart :chart-data="pieChartData.datasets" :chart-labels="pieChartData.labels" />
-    </v-card>
+  <h2>Traffic Analysis</h2>
+  <!-- pie-chart :chart-data="pieChartData"></pie-chart -->
+  <h3>{{net.name}}</h3>
+  <v-container grid-list-md text-xs-center>
+    <v-layout row wrap>
+      <v-flex xs12 md6>
+        <div v-if="!loaded">Loading Data...</div>
+        <v-card v-if="loaded">
+          <v-card-title>Sent and Received</v-card-title>
+          <v-card-text p1>
+            <pie-chart 
+            :chart-data="sentReceivePieChartData.datasets" 
+            :chart-labels="sentReceivePieChartData.labels" />
+          </v-card-text>
+          
+        </v-card>
+      </v-flex>
+      <v-flex xs12 md6>
+       <div v-if="!loaded">Loading Data...</div>
+        <v-card v-if="loaded">
+          <v-card-title>Flows and Clients</v-card-title>
+          <v-card-text p1>
+            <pie-chart 
+            :chart-data="flowsClientsPieChartData.datasets" 
+            :chart-labels="flowsClientsPieChartData.labels" />
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
+
+
+
+
+
+    
     
 </div>
 </template>
@@ -44,6 +69,12 @@ module.exports = {
     recv () {
       return this.traffic.map(t => t.recv)
     },
+    flows () {
+      return this.traffic.map(t => t.flows)
+    },
+    clients () {
+      return this.traffic.map(t => t.numClients)
+    },
     labels () {
       return this.traffic.map(t => {
         // extract details of Miscellaneous secure web
@@ -53,7 +84,7 @@ module.exports = {
         return t.application
       })
     },
-    pieChartData () {
+    sentReceivePieChartData () {
       return {
         labels: this.labels,
         
@@ -66,6 +97,23 @@ module.exports = {
             label: 'Sent',
             backgroundColor: '#f87979',
             data: this.sent
+          }
+        ]
+      }
+    },
+    flowsClientsPieChartData () {
+      return {
+        labels: this.labels,
+        
+        datasets: [
+          {
+            label: 'Received',
+            backgroundColor: '#3F7979',
+            data: this.flows
+          }, {
+            label: 'Sent',
+            backgroundColor: '#f27979',
+            data: this.clients
           }
         ]
       }
@@ -98,3 +146,8 @@ module.exports = {
   }
 }
 </script>
+<style>
+.piechart {
+  width: 
+}
+</style>
