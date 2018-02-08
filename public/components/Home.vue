@@ -16,7 +16,7 @@
 module.exports = {
   components: {
     'license': httpVueLoader('./meraki/licenses/LicensesSummary.vue'),
-    'welcome': httpVueLoader('./welcome.vue')
+    'welcome': httpVueLoader('./Welcome.vue')
   },
   data: function() {
     return {
