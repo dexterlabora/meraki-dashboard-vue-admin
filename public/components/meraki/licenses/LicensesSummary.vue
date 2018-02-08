@@ -3,11 +3,17 @@
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
     <v-card class="lic-card">
+      
       <v-card-title primary-title>
-        <div>
-        <h3 class="headline mb-0">License Summary</h3>   
-        {{org.name}} 
-        </div>
+        
+
+          <h3 class="headline mb-0">License Summary</h3>
+          <v-flex sm12>
+            <p class="text-xs-left">{{org.name}}</p>
+          </v-flex>
+          
+        
+
 
       </v-card-title>
 
