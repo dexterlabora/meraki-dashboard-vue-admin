@@ -7,7 +7,7 @@
     <v-layout row wrap>
       <v-flex xs12 md6>
         <div v-if="!loaded">Loading Data...</div>
-        <v-card v-if="loaded">
+        <v-card  v-if="loaded">
           <v-card-title>Sent and Received</v-card-title>
           <v-card-text p1>
             <pie-chart 
@@ -147,7 +147,7 @@ module.exports = {
 }
 </script>
 <style>
-.piechart {
-  width: 
+.chart {
+  height: 80%
 }
 </style>
