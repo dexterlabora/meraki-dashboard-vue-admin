@@ -38,7 +38,6 @@
             <v-list-tile avatar>
               <v-list-tile-content>
                 <v-list-tile-title>SSID Name</v-list-tile-title>
-                <v-list-tile-sub-title>{{ssidForm.name}}</v-list-tile-sub-title>
                 <v-text-field
                   v-model="ssidForm.name"
                   label="Name"
