@@ -4,12 +4,13 @@
     <v-flex xs12 sm6 offset-sm3>
     <v-card class="lic-card">
       
-      <v-card-title primary-title class="pb-2">
-        <h4 class="headline mb-0">License Summary</h4>
-        <p class="text-xs-left">{{org.name}}</p>         
+      <v-card-title primary-title >
+        <p class="headline mb-0">License Summary</p>
+               
       </v-card-title>
 
       <v-card-text>
+        <p class="subheading mb-2"><i>{{org.name}}</i></p>  
         <div>
           <strong>Status:</strong> {{licenses.status}}
           <br>      
