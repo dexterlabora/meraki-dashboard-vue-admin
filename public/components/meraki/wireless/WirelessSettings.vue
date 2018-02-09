@@ -32,20 +32,7 @@
                 </v-list-tile-content>
               </v-list-tile>
           </v-list>
-
-          <v-list two-line subheader>
-            <v-subheader>General</v-subheader>
-            <v-list-tile avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>SSID Name</v-list-tile-title>
-                <v-text-field
-                  v-model="ssidForm.name"
-                  label="Name"
-                  required
-                ></v-text-field>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile avatar>
+          <v-list-tile avatar>
               <v-list-tile-action>
                 <v-checkbox v-model="ssidForm.enabled"></v-checkbox>
               </v-list-tile-action>
@@ -54,6 +41,31 @@
                 <v-list-tile-sub-title>Enable the wireless network</v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
+          <v-list two-line subheader>
+            <v-subheader>General</v-subheader>
+            <v-list-tile avatar>
+              <v-list-tile-content>
+                <v-text-field
+                  v-model="ssidForm.name"
+                  label="SSID Name"
+                  required
+                ></v-text-field>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile avatar v-if="ssidForm.authMode == 'psk'">
+              <v-list-tile-content>
+                <v-list-tile-title>Pre-shared Key</v-list-tile-title>
+                <v-text-field
+                      v-model="ssidForm.psk"
+                      label="pre-shared key"
+                    ></v-text-field>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+           
+          <v-list two-line subheader v-if="adminMode">
+            <v-divider></v-divider>
+            <v-subheader>Advanced Settings</v-subheader>
             <v-list-tile avatar>
               <v-list-tile-content>
                 <v-list-tile-title>Authentication</v-list-tile-title>
@@ -64,15 +76,6 @@
                   v-model="ssidForm.authMode"
                   label="Authentication"
                 ></v-select>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile avatar v-if="ssidForm.authMode == 'psk'">
-              <v-list-tile-content>
-                <v-list-tile-title>Pre-shared Key</v-list-tile-title>
-                <v-text-field
-                      v-model="ssidForm.psk"
-                      label="pre-shared key"
-                    ></v-text-field>
               </v-list-tile-content>
             </v-list-tile>
             <v-list-tile avatar>
@@ -103,7 +106,7 @@
           </v-list>
 
           <v-divider></v-divider>
-          <v-list two-line subheader>
+          <v-list two-line subheader v-if="adminMode">
             <v-subheader>Splash Page</v-subheader>
 
             <v-list-tile avatar>
@@ -139,7 +142,7 @@
             </v-list-tile>
 
           <v-divider></v-divider>
-          <v-list two-line subheader>
+          <v-list two-line subheader v-if="adminMode">
             <v-subheader>Radio Settings</v-subheader>
 
             <v-list-tile avatar>
@@ -166,7 +169,7 @@
               </v-list-tile-content>      
             </v-list-tile>
 
-
+          
           </v-list>
             
         </v-card>
@@ -218,6 +221,9 @@ module.exports = {
   computed:{
     net: function(){
       return this.$store.state.net;
+    },
+    adminMode: function(){
+      return this.$store.state.adminMode;
     }
   },
   watch: {
@@ -248,6 +254,7 @@ module.exports = {
     });
     */
     this.fetchSsids();
+    this.mode = this.adminMode;
     
   },
 
@@ -274,7 +281,10 @@ module.exports = {
         axios.get(url)
           .then(res => {
             this.ssids = res.data;
-            this.ssid = this.ssids[0]; // set default SSID
+            // assign default ssid if not already selected
+            if(!this.ssid.number){
+              this.ssid = this.ssids[0];
+            }
           }, err => {
             console.log('error getting ssids',err);
           });

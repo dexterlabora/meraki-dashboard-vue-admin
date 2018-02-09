@@ -12,7 +12,7 @@
             <p class="text-xs-left">
               <p>Use this app to manage your network.</p>
               <p>This demo uses the Meraki Sandbox to instantly start exploring. </p> 
-              <p>Update the API key with the lock button.</p>
+              <p>Use the Admin menu <i aria-hidden="true" class="material-icons icon">lock</i>  to use your own API key and turn on advanced features.</p>
               <p><a href="https://meraki.io">Meraki.io</a></p>
           </v-flex>
       </v-card-title>

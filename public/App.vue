@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <v-toolbar color="primary">
+    <v-toolbar :color="!adminMode ? 'primary' : 'warning'">
       <v-toolbar-side-icon @click.native.stop="showNav = !showNav"></v-toolbar-side-icon>
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text">Meraki API Demo </v-toolbar-title>
@@ -30,21 +30,21 @@
             </v-list-tile>
           
           
-            <v-list-tile :router="true" :to="{ name: 'licenses'}">
+            <v-list-tile :router="true" :to="{ name: 'licenses'}" v-if="adminMode">
               <v-list-tile-title>Licenses</v-list-tile-title>
             </v-list-tile>
           
           
-            <v-list-tile :router="true" :to="{ name: 'inventory'}">
+            <v-list-tile :router="true" :to="{ name: 'inventory'}" v-if="adminMode">
               <v-list-tile-title>Inventory</v-list-tile-title>
             </v-list-tile>
           
           
-            <v-list-tile :router="true" :to="{ name: 'devices'}">
+            <v-list-tile :router="true" :to="{ name: 'devices'}" v-if="adminMode">
               <v-list-tile-title>Devices</v-list-tile-title>
             </v-list-tile>
 
-            <v-list-tile :router="true" :to="{ name: 'networks'}">
+            <v-list-tile :router="true" :to="{ name: 'networks'}" v-if="adminMode">
               <v-list-tile-title>Networks</v-list-tile-title>
             </v-list-tile>
 
@@ -76,12 +76,17 @@
 module.exports = {
   components: {
     'org-net': httpVueLoader('./components/meraki/OrgNet.vue'),
-    'settings': httpVueLoader('./components/meraki/admin/settings.vue')
+    'settings': httpVueLoader('./components/Settings.vue')
   },
 	data: function() {
 		return {
       showNav: false,
     };
+  },
+  computed: {
+    adminMode: function(){
+      return this.$store.state.adminMode;
+    }
   },
   mounted: function () {
     this.$eventHub.$on('orgSelected', function (org) {

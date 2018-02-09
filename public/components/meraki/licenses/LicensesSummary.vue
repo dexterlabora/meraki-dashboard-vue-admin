@@ -80,7 +80,7 @@
     },
     methods: {
       fetchLicenses: function () {
-        if(!this.org){
+        if(!this.org.id){
           return;
         }
         var url = '/api/organizations/'+this.org.id+'/licenseState';

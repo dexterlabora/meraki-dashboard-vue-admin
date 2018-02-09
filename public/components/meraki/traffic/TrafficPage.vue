@@ -4,22 +4,25 @@
   <!-- pie-chart :chart-data="pieChartData"></pie-chart -->
   <h3>{{net.name}}</h3>
   <v-container grid-list-md text-xs-center>
-    <v-layout row wrap>
+    <div v-if="!loaded">
+        Loading Data...
+      </div>
+      <div v-if="loaded && traffic.length < 1">
+        No data available. Ensure Traffic Analtyics is enabled for this network
+      </div>
+    <v-layout row wrap >
       <v-flex xs12 md6>
-        <div v-if="!loaded">Loading Data...</div>
-        <v-card  v-if="loaded">
+        <v-card>
           <v-card-title>Sent and Received</v-card-title>
           <v-card-text p1>
             <pie-chart 
             :chart-data="sentReceivePieChartData.datasets" 
             :chart-labels="sentReceivePieChartData.labels" />
           </v-card-text>
-          
         </v-card>
       </v-flex>
       <v-flex xs12 md6>
-       <div v-if="!loaded">Loading Data...</div>
-        <v-card v-if="loaded">
+        <v-card>
           <v-card-title>Flows and Clients</v-card-title>
           <v-card-text p1>
             <pie-chart 

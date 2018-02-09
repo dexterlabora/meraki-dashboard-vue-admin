@@ -1,10 +1,10 @@
 <template>
-<v-container fluid grid-list-md class="grey lighten-4">
+<v-container fluid grid-list-md>
   <v-layout row wrap>
-      <v-flex xs12 md6>
+      <v-flex xs12 md12>
         <welcome></welcome>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs12 md12>
         <license></license>
       </v-flex>
   </v-layout>

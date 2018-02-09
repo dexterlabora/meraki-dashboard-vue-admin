@@ -12,19 +12,20 @@ const store = new Vuex.Store({
 	state: {
     org: {},
     net: {},
-    apikey: ''
+    apikey: '',
+    adminMode: false
   }
 });
 
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#3f51b5',
+    primary: '#5cb85c', //green
     secondary: '#b0bec5',
     accent: '#8c9eff',
     error: '#b71c1c'
   }
-})
+});
 
 new Vue({
   router,

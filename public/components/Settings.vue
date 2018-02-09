@@ -5,17 +5,17 @@
       :close-on-content-click="false"
       :nudge-width="200"
       v-model="menu"
-    >
-      
+    >     
       <v-btn icon dark slot="activator">
         <v-icon>lock</v-icon>
       </v-btn>
+
       <v-card>
         <v-list>
           <v-list-tile avatar>
             <v-list-tile-content>
               <v-list-tile-title>Demo User</v-list-tile-title>
-              <v-list-tile-sub-title>Settings are ONLY stored in browser cache</v-list-tile-sub-title>
+              <v-list-tile-sub-title>Settings are NOT saved</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <!--v-btn
@@ -31,14 +31,23 @@
         <v-divider></v-divider>
         <v-list>
           <v-list-tile>
-            <v-list-tile-action>
+            <v-list-tile-sub-title>
               <v-text-field
               name="apikey"
               label="API KEY"
               id="apikey"
               v-model="form.apikey"
               ></v-text-field>
-            </v-list-tile-action>
+            </v-list-tile-sub-title>
+          </v-list-tile>
+         
+          <v-list-tile>
+            <v-list-tile-sub-title>
+              <v-checkbox
+                label="Admin Mode"
+                v-model="adminMode"
+              ></v-checkbox>
+            </v-list-tile-sub-title>
           </v-list-tile>
         </v-list>
         <v-card-actions>
@@ -55,6 +64,7 @@
   module.exports = {
     data: function() {
 		  return {
+        adminMode: false,
         fav: true,
         menu: false,
         message: false,
@@ -64,6 +74,11 @@
         }
       }
     },
+    watch: {
+      adminMode: function () {
+        return this.$store.state.adminMode;
+      }
+    },
     methods: {
       saveSettings () {
         console.log("settings ", this.form.apikey);
@@ -71,6 +86,7 @@
         this.menu = false
         this.$eventHub.$emit('apiKeyUpdated', this.form.apikey);
         //console.log('store apikey', this.$store.state.apikey);
+        this.$store.state.adminMode = this.adminMode; // not best practice
       }
     }
   }
