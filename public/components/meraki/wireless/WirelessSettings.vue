@@ -20,19 +20,20 @@
           <v-list two-line subheader>
             <v-subheader>Wireless Networks</v-subheader>
             <v-list-tile avatar>
-                <v-list-tile-content>
-                  <v-select 
-                    v-bind:items="ssids"
-                    item-text="name"
-                    item-value="number"
-                    return-object
-                    v-model="ssid"
-                    label="SSID"
-                  ></v-select>
-                </v-list-tile-content>
-              </v-list-tile>
+              <v-list-tile-content>
+                <v-select 
+                  v-bind:items="ssids"
+                  item-text="name"
+                  item-value="number"
+                  return-object
+                  v-model="ssid"
+                  label="SSID"
+                ></v-select>
+              </v-list-tile-content>
+            </v-list-tile>
           </v-list>
-          <v-list-tile avatar>
+          <v-list>
+            <v-list-tile avatar>
               <v-list-tile-action>
                 <v-checkbox v-model="ssidForm.enabled"></v-checkbox>
               </v-list-tile-action>
@@ -41,6 +42,7 @@
                 <v-list-tile-sub-title>Enable the wireless network</v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
+          </v-list>
           <v-list two-line subheader>
             <v-subheader>General</v-subheader>
             <v-list-tile avatar>
