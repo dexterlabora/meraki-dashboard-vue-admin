@@ -82,11 +82,11 @@
     methods: {
       saveSettings () {
         console.log("settings ", this.form.apikey);
-        //this.$store.state.apikey = this.form.apikey;
-        this.menu = false
+        this.$store.state.apikey = this.form.apikey;      
         this.$eventHub.$emit('apiKeyUpdated', this.form.apikey);
-        //console.log('store apikey', this.$store.state.apikey);
+        console.log('store apikey', this.$store.state.apikey);
         this.$store.state.adminMode = this.adminMode; // not best practice
+        this.menu = false;
       }
     }
   }

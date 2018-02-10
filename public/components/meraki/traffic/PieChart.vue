@@ -6,12 +6,15 @@ module.exports = {
   data: function () {
     return {
       chartOptions: {
-          legend: {
-            display: true
-          },
-          responsive: true,
-          maintainAspectRatio: false
+        legend: {
+          display: true
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        ticks: {
+          min: 0
         }
+      }
     }
   },
   watch: {

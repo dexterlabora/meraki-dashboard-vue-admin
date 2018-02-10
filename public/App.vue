@@ -64,7 +64,7 @@
         </v-container>
       </v-content>
     <v-footer>
-      <div class="text-xs-right"><small>This starter uses the <a class="vuetify-link" href="https://vuetifyjs.com/" target="_blank">Vuetify.js</a> ui component framework.</small></div>
+      <div class="text-xs-right"><small>Build with the Meraki API - <a class="vuetify-link" href="https://create.meraki.io/" target="_blank">Create.Meraki.io</a></small></div>
     </v-footer>
   </v-app>
 </template>

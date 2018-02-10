@@ -35,11 +35,11 @@
           <v-list>
             <v-list-tile avatar>
               <v-list-tile-action>
-                <v-checkbox v-model="ssidForm.enabled"></v-checkbox>
+                <v-switch v-model="ssidForm.enabled"></v-switch>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title>Enabled</v-list-tile-title>
-                <v-list-tile-sub-title>Enable the wireless network</v-list-tile-sub-title>
+                
+                <v-list-tile-title>Enable Network</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -56,10 +56,9 @@
             </v-list-tile>
             <v-list-tile avatar v-if="ssidForm.authMode == 'psk'">
               <v-list-tile-content>
-                <v-list-tile-title>Pre-shared Key</v-list-tile-title>
                 <v-text-field
                       v-model="ssidForm.psk"
-                      label="pre-shared key"
+                      label="Pre-shared key"
                     ></v-text-field>
               </v-list-tile-content>
             </v-list-tile>
@@ -70,8 +69,6 @@
             <v-subheader>Advanced Settings</v-subheader>
             <v-list-tile avatar>
               <v-list-tile-content>
-                <v-list-tile-title>Authentication</v-list-tile-title>
-                <v-list-tile-sub-title>{{ssidForm.authMode}}</v-list-tile-sub-title>
                 <v-select 
                   v-bind:items="ssidOptions.authMode"
                   return-object
@@ -82,8 +79,6 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-content>
-                <v-list-tile-title>Encryption</v-list-tile-title>
-                <v-list-tile-sub-title>{{ssidForm.encryptionMode}}</v-list-tile-sub-title>
                 <v-select 
                   v-bind:items="ssidOptions.encryptionMode"
                   return-object
@@ -95,8 +90,6 @@
             
             <v-list-tile avatar>
               <v-list-tile-content>
-                <v-list-tile-title>WPA Encryption</v-list-tile-title>
-                <v-list-tile-sub-title>{{ssidForm.wpaEncryptionMode}}</v-list-tile-sub-title>
                 <v-select 
                   v-bind:items="ssidOptions.wpaEncryptionMode"
                   return-object
@@ -113,7 +106,6 @@
 
             <v-list-tile avatar>
               <v-list-tile-content>
-                <v-list-tile-title>Splash Method</v-list-tile-title>
                 <v-select 
                   v-bind:items="ssidOptions.splashPage"
                   return-object
@@ -149,7 +141,6 @@
 
             <v-list-tile avatar>
               <v-list-tile-content>
-                <v-list-tile-title>Minimum Bitrate</v-list-tile-title>
                 <v-select 
                   v-bind:items="ssidOptions.minBitrate"
                   return-object
@@ -161,7 +152,6 @@
 
             <v-list-tile avatar>
               <v-list-tile-content>
-                <v-list-tile-title>Band Selection</v-list-tile-title>
                 <v-select 
                   v-bind:items="ssidOptions.bandSelection"
                   return-object
@@ -169,20 +159,12 @@
                   label="Band Selection"
                 ></v-select>
               </v-list-tile-content>      
-            </v-list-tile>
+            </v-list-tile>        
+          </v-list>          
+        </v-card>  
 
-          
-          </v-list>
-            
-        </v-card>
-        
       </v-flex>
-
   </v-layout>
-
-       
-
-
 </div>
 
 </template>
@@ -278,6 +260,7 @@ module.exports = {
       if(!this.net){
         return;
       }
+      if (!this.net.id){return}
       var url = '/api/networks/'+this.net.id+'/ssids';
         console.log('fetching ssids',this.ssids);
         axios.get(url)
