@@ -3,21 +3,31 @@
   <h2>Traffic Analysis</h2>
   <!-- pie-chart :chart-data="pieChartData"></pie-chart -->
   <h3>{{net.name}}</h3>
+  <v-flex xs4 md2>
+    <v-select 
+      v-bind:items="timespans"
+      v-model="timespan"
+      label="Timespan"
+      return-object
+    ></v-select>
+  </v-flex>
   <v-container grid-list-md text-xs-center>
+    <v-flex xs12 md6>
     <div v-if="!loaded">
         Loading Data...
       </div>
       <div v-if="loaded && traffic.length < 1">
         No data available. Ensure Traffic Analtyics is enabled for this network
       </div>
+    </v-flex>
     <v-layout row wrap >
       <v-flex xs12 md6>
         <v-card>
           <v-card-title>Sent and Received</v-card-title>
           <v-card-text p1>
-            <pie-chart 
-            :chart-data="sentReceivePieChartData.datasets" 
-            :chart-labels="sentReceivePieChartData.labels" />
+            <doughnut-chart 
+            :chart-data="sentReceiveChartData.datasets" 
+            :chart-labels="sentReceiveChartData.labels" />
           </v-card-text>
         </v-card>
       </v-flex>
@@ -26,35 +36,50 @@
           <v-card-title>Flows and Clients</v-card-title>
           <v-card-text p1>
             <pie-chart 
-            :chart-data="flowsClientsPieChartData.datasets" 
-            :chart-labels="flowsClientsPieChartData.labels" />
+            :chart-data="flowsClientsChartData.datasets" 
+            :chart-labels="flowsClientsChartData.labels" />
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 md6>
+        <v-card>
+          <v-card-title>Clients</v-card-title>
+          <v-card-text p1>
+            <bar-chart 
+            :chart-data="clientsChartData.datasets" 
+            :chart-labels="clientsChartData.labels" />
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 md6>
+        <v-card>
+          <v-card-title>Bandwidth (ToDo)</v-card-title>
+          <v-card-text p1>
+            <line-chart 
+            :chart-data="flowsClientsChartData.datasets" 
+            :chart-labels="flowsClientsChartData.labels" />
           </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
   </v-container>
-
-
-
-
-
-    
-    
 </div>
 </template>
 
 <script>
 module.exports = {
   components: {
-    //'traffic-charts': httpVueLoader('./TrafficCharts.vue'),
-    //'list-item': httpVueLoader('components/list/ListItem.vue'),
-    //'pie-chart': httpVueLoader('components/charts/PieChart.js'),
-    'pie-chart': httpVueLoader('./PieChart.vue'),
-    'line-chart': httpVueLoader('./LineChart.vue')
+    'pie-chart': httpVueLoader('components/charts/PieChart.vue'),
+    'line-chart': httpVueLoader('components/charts/LineChart.vue'),
+    'doughnut-chart': httpVueLoader('components/charts/DoughnutChart.vue'),
+    'bar-chart': httpVueLoader('components/charts/BarChart.vue'),
   },
   watch: {
       net: function () {
         console.log('net changed, fetching traffic');
+        this.fetchTraffic();
+      },
+      timespan: function () {
         this.fetchTraffic();
       }
   },
@@ -87,7 +112,7 @@ module.exports = {
         return t.application
       })
     },
-    sentReceivePieChartData () {
+    sentReceiveChartData () {
       return {
         labels: this.labels,
         
@@ -104,7 +129,7 @@ module.exports = {
         ]
       }
     },
-    flowsClientsPieChartData () {
+    flowsClientsChartData () {
       return {
         labels: this.labels,
         
@@ -120,12 +145,25 @@ module.exports = {
           }
         ]
       }
+    },
+    clientsChartData () {
+      return {
+        labels: this.labels,
+        
+        datasets: [
+          {
+            label: 'Clients',
+            backgroundColor: '#f27979',
+            data: this.clients
+          }
+        ]
+      }
     }
   },
   methods: {
     fetchTraffic () {
       if (!this.net.id){ return }
-      var url = '/api/networks/'+this.net.id+'/traffic?timespan='+this.timespan;
+      var url = '/api/networks/'+this.net.id+'/traffic?timespan='+this.timespan.value;
         axios.get(url)
           .then(res => {
             this.traffic = res.data;
@@ -144,7 +182,13 @@ module.exports = {
 		return {
       loaded: false, // state of API data
       traffic : [],
-      timespan: '7200',
+      timespan: {text: 'Day', value: 86400}, // default timespan
+      timespans: [
+        {text: '2 Hours', value: 7200},
+        {text: 'Day', value: 86400},
+        {text: 'Week', value: 604800},
+        {text: 'Month', value: 2419200}
+      ]
     };
   }
 }

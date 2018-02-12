@@ -1,52 +1,42 @@
-<template>
-  <div class="small">
-    <doughnut-chart :chart-data="datacollection"></doughnut-chart>
-    <button @click="fillData()">Randomize</button>
-  </div>
-</template>
 
 <script>
-  import DoughnutChart from httpVueLoader('./DoughnutChart.js')
 
-  export default {
-    components: {
-      DoughnutChart
-    },
-    data () {
-      return {
-        datacollection: null
-      }
-    },
-    mounted () {
-      this.fillData()
-    },
-    methods: {
-      fillData () {
-        this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data One',
-              backgroundColor: '#f811a9',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }
-          ]
+module.exports = {
+  extends: VueChartJs.Doughnut,
+  props: ['chart-labels', 'chart-data'],
+  data: function () {
+    return {
+      chartOptions: {
+        legend: {
+          display: true
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        ticks: {
+          min: 0
         }
-      },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       }
     }
+  },
+  watch: {
+    chartData: function () {
+      console.log('rendering chart');
+      this.renderChart({
+        labels: this.chartLabels, //['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: this.chartData
+        /*
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: this.chartData, //[40, 39, 10, 40, 39, 80, 40]
+          }
+        ]
+        */
+      }, {responsive: true, maintainAspectRatio: true})
+    }
   }
-</script>
+}
 
-<style>
-  .small {
-    max-width: 600px;
-    margin:  150px auto;
-  }
-</style>
+
+</script>

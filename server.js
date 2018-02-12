@@ -77,6 +77,10 @@ app.use('/api', jsonParser, function (req, res){
         console.log("requestMeraki err ", err)
         res.send(err);
     }
+    if(!response){
+      console.log('no response from server')
+      return
+    }
     console.log('FINAL res.statusCode ',response.statusCode);
     console.log('FINAL res.body ',response.body);
 
