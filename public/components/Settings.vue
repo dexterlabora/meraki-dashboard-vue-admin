@@ -36,7 +36,7 @@
               name="apikey"
               label="API KEY"
               id="apikey"
-              v-model="form.apikey"
+              v-model="apikey"
               ></v-text-field>
             </v-list-tile-sub-title>
           </v-list-tile>
@@ -65,26 +65,30 @@
     data: function() {
 		  return {
         adminMode: false,
+        formUpdated: false, 
         fav: true,
         menu: false,
         message: false,
         hints: true,
-        form: {
-          apikey: ''
-        }
+        apikey: ''
       }
     },
     watch: {
       adminMode: function () {
         return this.$store.state.adminMode;
+      },
+      apikey: function () {
+        this.formUpdated = true;
       }
     },
     methods: {
       saveSettings () {
-        console.log("settings ", this.form.apikey);
-        this.$store.state.apikey = this.form.apikey;      
-        this.$eventHub.$emit('apiKeyUpdated', this.form.apikey);
-        console.log('store apikey', this.$store.state.apikey);
+        if(this.formUpdated){
+          this.formUpdated = false; // reset updated state
+          console.log('api key updated');
+          this.$store.state.apikey = this.apikey;      
+          this.$eventHub.$emit('apiKeyUpdated', this.apikey);
+        }
         this.$store.state.adminMode = this.adminMode; // not best practice
         this.menu = false;
       }
