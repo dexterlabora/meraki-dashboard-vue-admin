@@ -12,9 +12,10 @@
     ></v-select>
   </v-flex>
   <v-container grid-list-md text-xs-center>
-    <v-flex xs12 md6>
+    <v-flex xs12 md12>
     <div v-if="!loaded">
         Loading Data...
+        <v-progress-linear v-bind:indeterminate="!loaded"></v-progress-linear>
       </div>
       <div v-if="loaded && traffic.length < 1">
         No data available. Ensure Traffic Analtyics is enabled for this network
@@ -162,6 +163,8 @@ module.exports = {
   },
   methods: {
     fetchTraffic () {
+      this.loaded = false;
+      this.traffic = [] // clear data
       if (!this.net.id){ return }
       var url = '/api/networks/'+this.net.id+'/traffic?timespan='+this.timespan.value;
         axios.get(url)
