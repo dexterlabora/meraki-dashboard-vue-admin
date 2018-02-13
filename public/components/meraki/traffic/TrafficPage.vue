@@ -42,7 +42,7 @@
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs12 md12>
         <v-card>
           <v-card-title>Clients</v-card-title>
           <v-card-text p1>
