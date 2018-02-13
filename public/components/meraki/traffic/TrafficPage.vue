@@ -34,11 +34,11 @@
       </v-flex>
       <v-flex xs12 md6>
         <v-card>
-          <v-card-title>Flows and Clients</v-card-title>
+          <v-card-title>Flows and Active Time</v-card-title>
           <v-card-text p1>
             <pie-chart 
-            :chart-data="flowsClientsChartData.datasets" 
-            :chart-labels="flowsClientsChartData.labels" />
+            :chart-data="flowsActiveChartData.datasets" 
+            :chart-labels="flowsActiveChartData.labels" />
           </v-card-text>
         </v-card>
       </v-flex>
@@ -52,16 +52,16 @@
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs12 md6>
+      <!--v-flex xs12 md6>
         <v-card>
           <v-card-title>Bandwidth (ToDo)</v-card-title>
           <v-card-text p1>
             <line-chart 
-            :chart-data="flowsClientsChartData.datasets" 
-            :chart-labels="flowsClientsChartData.labels" />
+            :chart-data="flowsActiveChartData.datasets" 
+            :chart-labels="flowsActiveChartData.labels" />
           </v-card-text>
         </v-card>
-      </v-flex>
+      </v-flex-->
     </v-layout>
   </v-container>
 </div>
@@ -101,6 +101,9 @@ module.exports = {
     flows () {
       return this.traffic.map(t => t.flows)
     },
+    activeTime () {
+      return this.traffic.map(t => t.activeTime)
+    },
     clients () {
       return this.traffic.map(t => t.numClients)
     },
@@ -130,19 +133,19 @@ module.exports = {
         ]
       }
     },
-    flowsClientsChartData () {
+    flowsActiveChartData () {
       return {
         labels: this.labels,
         
         datasets: [
           {
-            label: 'Received',
+            label: 'Flows',
             backgroundColor: '#3F7979',
             data: this.flows
           }, {
-            label: 'Sent',
+            label: 'Active Time',
             backgroundColor: '#f27979',
-            data: this.clients
+            data: this.activeTime
           }
         ]
       }
