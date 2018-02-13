@@ -1,5 +1,5 @@
 <template>
-  <div class="text-xs-center">
+
     <v-menu
       offset-x
       :close-on-content-click="false"
@@ -57,7 +57,7 @@
         </v-card-actions>
       </v-card>
     </v-menu>
-  </div>
+
 </template>
 
 <script>
