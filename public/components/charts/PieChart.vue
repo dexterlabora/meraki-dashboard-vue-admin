@@ -33,7 +33,16 @@ module.exports = {
           }
         ]
         */
-      }, {responsive: true, maintainAspectRatio: true})
+        },
+        {
+          responsive: true,
+          maintainAspectRatio: true,
+          legend: {
+            display: false,
+            position: 'bottom'
+          }
+        }
+      )
     }
   }
 }

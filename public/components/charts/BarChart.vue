@@ -33,7 +33,22 @@ module.exports = {
           }
         ]
         */
-      }, {responsive: true, maintainAspectRatio: true})
+      }, {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            xAxes: [{
+                stacked: false
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        },
+        legend: {
+            display: false,
+            position: 'bottom'
+          }
+        })
     }
   }
 }
