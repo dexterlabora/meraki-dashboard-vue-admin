@@ -38,7 +38,7 @@ module.exports = {
         maintainAspectRatio: true,
         scales: {
             xAxes: [{
-                stacked: false
+                stacked: true
             }],
             yAxes: [{
                 stacked: true
